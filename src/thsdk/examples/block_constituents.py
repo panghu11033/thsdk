@@ -1,6 +1,5 @@
-from thsdk import THS
+import thsdk
 
-from thsdk.examples._helpers import print_response_df
-
-with THS() as ths:
-    print_response_df("板块成份股数据:", ths.block_constituents("URFI886037"))
+thsdk.auth()
+result = thsdk.block_constituents("沪深300", start=0, count=10)
+print(result)

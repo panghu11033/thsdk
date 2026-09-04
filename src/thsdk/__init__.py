@@ -1,8 +1,17 @@
-from .response import Response
-from .thsdk import THS
+from .api import *
+from .api import __all__ as _api_all
+from .constants import *
+from .constants import __all__ as _constants_all
+from .exceptions import APIError, AuthenticationError, NotAuthenticatedError, THSDKError
 
-ths_api_all = ("THS", "Response")
+__version__ = "2.0.0"
 
-__all__ = (
-    *ths_api_all,
-)
+__all__ = [
+    "THSDKError",
+    "AuthenticationError",
+    "NotAuthenticatedError",
+    "APIError",
+    "__version__",
+    *_constants_all,
+    *_api_all,
+]
