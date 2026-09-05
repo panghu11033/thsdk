@@ -21,7 +21,6 @@ def calculate_security_realtime_statistics(
     securities: Sequence[SecurityInput] | None = None,
     metrics: Sequence[int] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``CalculateSecurityRealtimeStatistics``；请求 ``RealtimeStatsCalculationRequest``，返回 ``RealtimeStatsResult``。"""
 
@@ -34,7 +33,6 @@ def calculate_security_realtime_statistics(
         },
         required=("securities", "metrics"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -44,7 +42,6 @@ def get_security_popularity_rank(
     security: SecurityInput | None = None,
     benchmark: Mapping[str, Any] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``GetSecurityPopularityRank``；请求 ``PopularityRankRequest``，返回 ``PopularityRankResult``。"""
 
@@ -57,7 +54,6 @@ def get_security_popularity_rank(
         },
         required=("security",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -67,7 +63,6 @@ def list_securities_by_realtime_signal(
     markets: Sequence[str] | None = None,
     signal: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecuritiesByRealtimeSignal``；请求 ``RealtimeSignalSecuritiesRequest``，返回 ``list[RealtimeSignalSecurity]``。"""
 
@@ -80,7 +75,6 @@ def list_securities_by_realtime_signal(
         },
         required=("markets", "signal"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -96,7 +90,6 @@ def rank_block_securities(
     exclude_blocks: Sequence[BlockInput] | None = None,
     func_period: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``RankBlockSecurities``；请求 ``SortedBlockSecuritiesRequest``，返回 ``SortedSecuritiesResult``。"""
 
@@ -115,7 +108,6 @@ def rank_block_securities(
         },
         required=("block",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -127,7 +119,6 @@ def rank_block_securities_by_industry(
     sort_count: int | None = None,
     sort_order: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``RankBlockSecuritiesByIndustry``；请求 ``IndustrySortedBlockSecuritiesRequest``，返回 ``SortedSecuritiesResult``。"""
 
@@ -142,7 +133,6 @@ def rank_block_securities_by_industry(
         },
         required=("block",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -159,7 +149,6 @@ def rank_constituents_by_performance_contribution(
     valid_begin: int | None = None,
     valid_end: int | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``RankConstituentsByPerformanceContribution``；请求 ``PerformanceContributionRankingRequest``，返回 ``list[PerformanceContributionItem]``。"""
 
@@ -179,7 +168,6 @@ def rank_constituents_by_performance_contribution(
         },
         required=("code", "market"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -193,7 +181,6 @@ def rank_related_securities(
     sort_order: str | None = None,
     func_period: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``RankRelatedSecurities``；请求 ``RelatedSecuritiesRequest``，返回 ``SortedSecuritiesResult``。"""
 
@@ -210,7 +197,6 @@ def rank_related_securities(
         },
         required=("security",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -220,7 +206,6 @@ def rank_securities_by_popularity(
     type: int | None = None,
     benchmark: Mapping[str, Any] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``RankSecuritiesByPopularity``；请求 ``PopularityRankTopRequest``，返回 ``PopularityRankTopResult``。"""
 
@@ -233,7 +218,6 @@ def rank_securities_by_popularity(
         },
         required=(),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -248,7 +232,6 @@ def rank_securities_by_realtime_statistic(
     sort_count: int | None = None,
     exclude_securities: Sequence[SecurityInput] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``RankSecuritiesByRealtimeStatistic``；请求 ``RealtimeStatsRankingRequest``，返回 ``RealtimeStatsResult``。"""
 
@@ -266,7 +249,6 @@ def rank_securities_by_realtime_statistic(
         },
         required=("sort_by",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -280,7 +262,6 @@ def sort_securities(
     sort_order: str | None = None,
     func_period: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``SortSecurities``；请求 ``SortedSecuritiesRequest``，返回 ``SortedSecuritiesResult``。"""
 
@@ -297,7 +278,6 @@ def sort_securities(
         },
         required=("securities",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -309,7 +289,6 @@ def sort_securities_by_industry(
     sort_count: int | None = None,
     sort_order: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``SortSecuritiesByIndustry``；请求 ``IndustrySortedSecuritiesRequest``，返回 ``SortedSecuritiesResult``。"""
 
@@ -324,7 +303,6 @@ def sort_securities_by_industry(
         },
         required=("securities",),
         timeout=timeout,
-        extra=extra,
     )
 
 

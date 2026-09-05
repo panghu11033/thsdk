@@ -27,7 +27,6 @@ def add_account_watchlist_group_securities(
     group_id: int | None = None,
     securities: Sequence[SecurityInput] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``AddAccountWatchlistGroupSecurities``；请求 ``AccountWatchlistGroupSecuritiesRequest``，返回 ``AccountWatchlistGroups``。 会修改当前账号的远端数据。"""
 
@@ -40,7 +39,6 @@ def add_account_watchlist_group_securities(
         },
         required=("group_id", "securities"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -50,7 +48,6 @@ def add_account_watchlist_securities(
     securities: Sequence[SecurityInput] | None = None,
     add_to_front: bool | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``AddAccountWatchlistSecurities``；请求 ``AddAccountWatchlistSecuritiesRequest``，返回 ``AccountWatchlistUpdate``。 会修改当前账号的远端数据。"""
 
@@ -63,7 +60,6 @@ def add_account_watchlist_securities(
         },
         required=("securities",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -79,7 +75,6 @@ def create_account_watchlist_group(
     name: str | None = None,
     securities: Sequence[SecurityInput] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``CreateAccountWatchlistGroup``；请求 ``CreateAccountWatchlistGroupRequest``，返回 ``AccountWatchlistGroups``。 会修改当前账号的远端数据。"""
 
@@ -92,7 +87,6 @@ def create_account_watchlist_group(
         },
         required=("name",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -101,7 +95,6 @@ def delete_account_watchlist_group(
     *,
     group_id: int | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``DeleteAccountWatchlistGroup``；请求 ``DeleteAccountWatchlistGroupRequest``，返回 ``AccountWatchlistGroups``。 会修改当前账号的远端数据。"""
 
@@ -113,7 +106,6 @@ def delete_account_watchlist_group(
         },
         required=("group_id",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -135,7 +127,6 @@ def remove_account_watchlist_group_securities(
     group_id: int | None = None,
     securities: Sequence[SecurityInput] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``RemoveAccountWatchlistGroupSecurities``；请求 ``AccountWatchlistGroupSecuritiesRequest``，返回 ``AccountWatchlistGroups``。 会修改当前账号的远端数据。"""
 
@@ -148,7 +139,6 @@ def remove_account_watchlist_group_securities(
         },
         required=("group_id", "securities"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -157,7 +147,6 @@ def remove_account_watchlist_securities(
     *,
     securities: Sequence[SecurityInput] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``RemoveAccountWatchlistSecurities``；请求 ``RemoveAccountWatchlistSecuritiesRequest``，返回 ``AccountWatchlistUpdate``。 会修改当前账号的远端数据。"""
 
@@ -169,7 +158,6 @@ def remove_account_watchlist_securities(
         },
         required=("securities",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -179,7 +167,6 @@ def rename_account_watchlist_group(
     group_id: int | None = None,
     name: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``RenameAccountWatchlistGroup``；请求 ``RenameAccountWatchlistGroupRequest``，返回 ``AccountWatchlistGroups``。 会修改当前账号的远端数据。"""
 
@@ -192,7 +179,6 @@ def rename_account_watchlist_group(
         },
         required=("group_id", "name"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -202,7 +188,6 @@ def replace_account_watchlist_group_securities(
     group_id: int | None = None,
     securities: Sequence[SecurityInput] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ReplaceAccountWatchlistGroupSecurities``；请求 ``AccountWatchlistGroupSecuritiesRequest``，返回 ``AccountWatchlistGroups``。 会修改当前账号的远端数据。"""
 
@@ -215,7 +200,6 @@ def replace_account_watchlist_group_securities(
         },
         required=("group_id", "securities"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -225,7 +209,6 @@ def replace_account_watchlist_securities(
     version: int | None = None,
     securities: Sequence[SecurityInput] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ReplaceAccountWatchlistSecurities``；请求 ``ReplaceAccountWatchlistSecuritiesRequest``，返回 ``AccountWatchlistUpdate``。 会修改当前账号的远端数据。"""
 
@@ -238,7 +221,6 @@ def replace_account_watchlist_securities(
         },
         required=("version", "securities"),
         timeout=timeout,
-        extra=extra,
     )
 
 

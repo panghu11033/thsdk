@@ -26,7 +26,6 @@ def list_wencai_hot_blocks(
     *,
     kind: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListWencaiHotBlocks``；请求 ``WencaiHotBlocksRequest``，返回 ``WencaiHotBlocksResult``。"""
 
@@ -38,7 +37,6 @@ def list_wencai_hot_blocks(
         },
         required=("kind",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -49,7 +47,6 @@ def query_wencai(
     markets: Sequence[str] | None = None,
     limit: int | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``QueryWencai``；请求 ``WencaiQueryRequest``，返回 ``WencaiQueryResult``。"""
 
@@ -63,7 +60,6 @@ def query_wencai(
         },
         required=("query",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -73,7 +69,6 @@ def query_wencai_realtime_fields(
     securities: Sequence[SecurityInput] | None = None,
     fields: Sequence[Mapping[str, Any]] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``QueryWencaiRealtimeFields``；请求 ``WencaiRealtimeFieldsRequest``，返回 ``WencaiRealtimeFieldsResult``。"""
 
@@ -86,7 +81,6 @@ def query_wencai_realtime_fields(
         },
         required=("securities", "fields"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -97,7 +91,6 @@ def query_wencai_securities(
     markets: Sequence[str] | None = None,
     limit: int | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``QueryWencaiSecurities``；请求 ``WencaiSecuritiesRequest``，返回 ``WencaiSecuritiesResult``。"""
 
@@ -111,7 +104,6 @@ def query_wencai_securities(
         },
         required=("query",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -124,7 +116,6 @@ def rank_block_securities_by_wencai_field(
     limit: int | None = None,
     sort_order: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``RankBlockSecuritiesByWencaiField``；请求 ``RankBlockSecuritiesByWencaiFieldRequest``，返回 ``WencaiBlockRankingResult``。"""
 
@@ -140,7 +131,6 @@ def rank_block_securities_by_wencai_field(
         },
         required=("block", "field"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -151,7 +141,6 @@ def resolve_wencai_securities(
     limit: int | None = None,
     stock_suffix: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ResolveWencaiSecurities``；请求 ``ResolveWencaiSecuritiesRequest``，返回 ``ResolvedWencaiSecuritiesResult``。"""
 
@@ -165,7 +154,6 @@ def resolve_wencai_securities(
         },
         required=("query",),
         timeout=timeout,
-        extra=extra,
     )
 
 

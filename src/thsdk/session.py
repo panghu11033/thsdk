@@ -17,6 +17,26 @@ from .exceptions import APIError, AuthenticationError, NotAuthenticatedError
 _ACCOUNT_MAC_SEED = b"thsdk-account-mac-v1\0"
 _ENV_USERNAME = "THS_USERNAME"
 _ENV_PASSWORD = "THS_PASSWORD"
+_MAX_TIMEOUT_SECONDS = 600
+_MIN_QR_POLL_SECONDS = 0.5
+_MAX_QR_POLL_SECONDS = 30
+_MAX_RATE_LIMIT_RETRY_MS = 1_000
+
+
+def _validate_seconds(value: float, name: str, *, minimum: float, maximum: float) -> float:
+    if (
+        isinstance(value, bool)
+        or not isinstance(value, (int, float))
+        or not math.isfinite(value)
+        or value < minimum
+        or value > maximum
+    ):
+        raise ValueError(f"{name} 必须在 {minimum:g} 到 {maximum:g} 秒之间")
+    return float(value)
+
+
+def _timeout_milliseconds(value: float) -> int:
+    return max(1, math.ceil(value * 1000))
 
 
 def _derive_account_mac(username: str) -> str:
@@ -63,18 +83,44 @@ class _Client:
             return self._runtime
 
     @staticmethod
-    def _error(response: dict[str, Any]) -> tuple[str, str]:
+    def _error(response: dict[str, Any]) -> tuple[str, str, int | None]:
         value = response.get("error") or {}
         if not isinstance(value, dict):
-            return "unknown_error", str(value)
-        return str(value.get("code") or "unknown_error"), str(value.get("message") or "unknown error")
+            return "unknown_error", str(value), None
+        retry_after = value.get("retry_after_ms")
+        if isinstance(retry_after, bool) or not isinstance(retry_after, int) or retry_after <= 0:
+            retry_after = None
+        return (
+            str(value.get("code") or "unknown_error"),
+            str(value.get("message") or "unknown error"),
+            retry_after,
+        )
 
     def _invoke(self, method: str, params: Any = None, *, timeout_ms: int | None = None) -> Any:
-        response = self.runtime.call(method, params, timeout_ms=timeout_ms)
-        if not response.get("ok"):
-            code, message = self._error(response)
-            raise APIError(code, message)
-        return response.get("data")
+        deadline = None if timeout_ms is None else time.monotonic() + timeout_ms / 1000
+        call_timeout_ms = timeout_ms
+        for attempt in range(2):
+            response = self.runtime.call(method, params, timeout_ms=call_timeout_ms)
+            if response.get("ok"):
+                return response.get("data")
+            code, message, retry_after_ms = self._error(response)
+            can_retry = (
+                attempt == 0
+                and code == "rate_limited"
+                and retry_after_ms is not None
+                and retry_after_ms <= _MAX_RATE_LIMIT_RETRY_MS
+            )
+            if can_retry and deadline is not None:
+                can_retry = time.monotonic() + retry_after_ms / 1000 < deadline
+            if not can_retry:
+                raise APIError(code, message, retry_after_ms=retry_after_ms)
+            time.sleep(retry_after_ms / 1000)
+            if deadline is not None:
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    raise APIError(code, message, retry_after_ms=retry_after_ms)
+                call_timeout_ms = _timeout_milliseconds(remaining)
+        raise AssertionError("unreachable")
 
     def auth(
         self,
@@ -85,8 +131,12 @@ class _Client:
         timeout: float = 60,
     ) -> bool:
         """Authenticate from explicit, environment, session, or temporary credentials."""
-        if timeout <= 0:
-            raise ValueError("timeout 必须大于 0")
+        timeout = _validate_seconds(
+            timeout,
+            "timeout",
+            minimum=1e-9,
+            maximum=_MAX_TIMEOUT_SECONDS,
+        )
         if (username is None) != (password is None):
             raise AuthenticationError("账号和密码必须同时提供")
         if username is not None and (not username.strip() or not password):
@@ -110,7 +160,7 @@ class _Client:
             data = self._invoke(
                 "auth",
                 params,
-                timeout_ms=max(1, math.ceil(remaining * 1000)),
+                timeout_ms=_timeout_milliseconds(remaining),
             ) or {}
             if not isinstance(data, dict) or not data.get("authenticated"):
                 raise AuthenticationError("认证未完成")
@@ -169,20 +219,28 @@ class _Client:
         poll_interval: float = 1,
     ) -> bool:
         """Restore the local session first, otherwise complete one QR login job."""
-        if timeout <= 0:
-            raise ValueError("timeout 必须大于 0")
-        if poll_interval <= 0:
-            raise ValueError("poll_interval 必须大于 0")
+        timeout = _validate_seconds(
+            timeout,
+            "timeout",
+            minimum=1e-9,
+            maximum=_MAX_TIMEOUT_SECONDS,
+        )
+        poll_interval = _validate_seconds(
+            poll_interval,
+            "poll_interval",
+            minimum=_MIN_QR_POLL_SECONDS,
+            maximum=_MAX_QR_POLL_SECONDS,
+        )
 
         deadline = time.monotonic() + timeout
         start_params = {
             "session_dir": str(self.session_dir),
             "timeout_seconds": max(1, math.ceil(timeout)),
-            "poll_interval_ms": max(100, int(poll_interval * 1000)),
+            "poll_interval_ms": _timeout_milliseconds(poll_interval),
         }
         with self._auth_lock:
             try:
-                remaining_ms = max(1, math.ceil((deadline - time.monotonic()) * 1000))
+                remaining_ms = _timeout_milliseconds(deadline - time.monotonic())
                 state = self._invoke(
                     "auth_qrcode",
                     start_params,
@@ -221,7 +279,7 @@ class _Client:
                         break
                     state = self._invoke(
                         "auth_qrcode",
-                        timeout_ms=max(1, math.ceil(remaining * 1000)),
+                        timeout_ms=_timeout_milliseconds(remaining),
                     ) or {}
                     show_challenge(state)
                     if state.get("authenticated") or state.get("state") == "authenticated":
@@ -252,7 +310,14 @@ class _Client:
                 raise NotAuthenticatedError(
                     "尚未认证；请先调用 auth_qrcode() 或 auth(...)"
                 )
-            timeout_ms = None if timeout is None else max(1, int(timeout * 1000))
+            if timeout is not None:
+                timeout = _validate_seconds(
+                    timeout,
+                    "timeout",
+                    minimum=1e-9,
+                    maximum=_MAX_TIMEOUT_SECONDS,
+                )
+            timeout_ms = None if timeout is None else _timeout_milliseconds(timeout)
             return self._invoke(method, params, timeout_ms=timeout_ms)
 
     def logout(self) -> None:

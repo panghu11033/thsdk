@@ -16,7 +16,8 @@ level_2_names = thsdk.list_block_constituents(
     sort_order="A",
 )
 level_2_name_by_code = {
-    item["full_code"]: item.get("name", "") for item in level_2_names
+    item["full_code"]: item.get("name", "")
+    for item in level_2_names.to_dict("records")
 }
 level_2_ranking = thsdk.rank_block_securities(
     block=LEVEL_2_BLOCK,
@@ -26,7 +27,7 @@ level_2_ranking = thsdk.rank_block_securities(
     sort_order="D",
 )
 print("二级行业涨幅排行：")
-for item in level_2_ranking.get("securities") or []:
+for item in level_2_ranking.to_dict("records"):
     print(item["full_code"], level_2_name_by_code.get(item["full_code"], ""))
 
 # 从个股所属二级行业继续展开三级行业。
@@ -42,17 +43,18 @@ level_3_names = thsdk.list_block_constituents(
     sort_order="A",
 )
 level_3_name_by_code = {
-    item["full_code"]: item.get("name", "") for item in level_3_names
+    item["full_code"]: item.get("name", "")
+    for item in level_3_names.to_dict("records")
 }
 
 print(f"\n{SECURITY} 的二级行业：{level_2_industry.get('name', '')}")
 print("下属三级行业：")
-for child in level_3_children:
+for child in level_3_children.to_dict("records"):
     print(child["full_code"], level_3_name_by_code.get(child["full_code"], ""))
 
 # 选择第一个三级行业，解析板块并显示按涨幅排列的成分股。
-if level_3_children:
-    level_3_code = level_3_children[0]["full_code"]
+if not level_3_children.empty:
+    level_3_code = level_3_children.iloc[0]["full_code"]
     level_3_name = level_3_name_by_code[level_3_code]
     level_3_block = thsdk.resolve_block(name=level_3_name)
 
@@ -64,7 +66,8 @@ if level_3_children:
         sort_order="A",
     )
     member_name_by_code = {
-        item["full_code"]: item.get("name", "") for item in member_names
+        item["full_code"]: item.get("name", "")
+        for item in member_names.to_dict("records")
     }
     member_ranking = thsdk.rank_block_securities(
         block=level_3_block,
@@ -75,5 +78,5 @@ if level_3_children:
     )
 
     print(f"\n三级行业“{level_3_name}”成分股涨幅排行：")
-    for item in member_ranking.get("securities") or []:
+    for item in member_ranking.to_dict("records"):
         print(item["full_code"], member_name_by_code.get(item["full_code"], ""))

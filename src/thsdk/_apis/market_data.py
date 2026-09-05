@@ -21,7 +21,6 @@ def check_market_timeline_readiness(
     market: str | None = None,
     time_index_day: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``CheckMarketTimelineReadiness``；请求 ``MarketTimelineReadinessRequest``，返回 ``MarketTimelineReadinessResult``。"""
 
@@ -34,7 +33,6 @@ def check_market_timeline_readiness(
         },
         required=("market", "time_index_day"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -43,7 +41,6 @@ def get_security_trading_timeline(
     *,
     security: SecurityInput | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``GetSecurityTradingTimeline``；请求 ``SecurityTradingTimelineRequest``，返回 ``SecurityTradingTimeline``。"""
 
@@ -55,7 +52,6 @@ def get_security_trading_timeline(
         },
         required=("security",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -65,7 +61,6 @@ def list_index_call_auction_quotes(
     index: Mapping[str, Any] | None = None,
     phase: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListIndexCallAuctionQuotes``；请求 ``IndexCallAuctionQuotesRequest``，返回 ``list[IndexCallAuctionQuote]``。"""
 
@@ -78,7 +73,6 @@ def list_index_call_auction_quotes(
         },
         required=("index", "phase"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -90,7 +84,6 @@ def list_security_call_auction_quotes(
     date: str | date | datetime | None = None,
     window: Mapping[str, Any] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityCallAuctionQuotes``；请求 ``SecurityCallAuctionQuotesRequest``，返回 ``list[CallAuctionQuote]``。"""
 
@@ -106,7 +99,6 @@ def list_security_call_auction_quotes(
         required=("security", "phase"),
         datetime_fields=("date",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -119,7 +111,6 @@ def list_security_corporate_actions(
     adjust: int | None = None,
     period: int | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityCorporateActions``；请求 ``SecurityCorporateActionsRequest``，返回 ``list[CorporateAction]``。"""
 
@@ -135,7 +126,6 @@ def list_security_corporate_actions(
         },
         required=("security", "start", "end", "adjust", "period"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -144,7 +134,6 @@ def list_security_daily_capital_flows(
     *,
     securities: Sequence[SecurityInput] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityDailyCapitalFlows``；请求 ``SecurityDailyCapitalFlowsRequest``，返回 ``list[DailyCapitalFlow]``。"""
 
@@ -156,7 +145,6 @@ def list_security_daily_capital_flows(
         },
         required=("securities",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -168,7 +156,6 @@ def list_security_daily_k_lines_with_previous_close(
     end: int | None = None,
     adjust: int | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityDailyKLinesWithPreviousClose``；请求 ``DailyKLineRequest``，返回 ``list[DailyKLineWithPreviousClose]``。"""
 
@@ -183,7 +170,6 @@ def list_security_daily_k_lines_with_previous_close(
         },
         required=("security", "start", "end", "adjust"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -194,7 +180,6 @@ def list_security_extended_hours_intraday_bars(
     session: str | None = None,
     date: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityExtendedHoursIntradayBars``；请求 ``SecurityExtendedHoursIntradayBarsRequest``，返回 ``list[IntradayBar]``。"""
 
@@ -208,7 +193,6 @@ def list_security_extended_hours_intraday_bars(
         },
         required=("security", "session", "date"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -219,7 +203,6 @@ def list_security_extended_hours_ticks(
     session: str | None = None,
     window: Mapping[str, Any] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityExtendedHoursTicks``；请求 ``SecurityExtendedHoursTicksRequest``，返回 ``list[Tick]``。"""
 
@@ -233,7 +216,6 @@ def list_security_extended_hours_ticks(
         },
         required=("security", "session", "window"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -243,7 +225,6 @@ def list_security_financial_snapshots(
     securities: Sequence[SecurityInput] | None = None,
     fields: Sequence[str] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityFinancialSnapshots``；请求 ``SecurityFinancialSnapshotsRequest``，返回 ``list[SecurityFinancialSnapshot]``。"""
 
@@ -256,7 +237,6 @@ def list_security_financial_snapshots(
         },
         required=("securities", "fields"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -266,7 +246,6 @@ def list_security_intraday_bars(
     security: SecurityInput | None = None,
     date: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityIntradayBars``；请求 ``IntradayBarsRequest``，返回 ``list[IntradayBar]``。"""
 
@@ -279,7 +258,6 @@ def list_security_intraday_bars(
         },
         required=("security", "date"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -292,7 +270,6 @@ def list_security_k_lines(
     adjust: int | None = None,
     period: int | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityKLines``；请求 ``KLineRequest``，返回 ``list[KLine]``。"""
 
@@ -308,7 +285,6 @@ def list_security_k_lines(
         },
         required=("security", "start", "end", "adjust", "period"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -318,7 +294,6 @@ def list_security_option_greeks(
     securities: Sequence[SecurityInput] | None = None,
     metrics: Sequence[int] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityOptionGreeks``；请求 ``OptionGreeksRequest``，返回 ``list[OptionGreeksRow]``。"""
 
@@ -331,7 +306,6 @@ def list_security_option_greeks(
         },
         required=("securities",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -341,7 +315,6 @@ def list_security_order_books(
     securities: Sequence[SecurityInput] | None = None,
     depth: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityOrderBooks``；请求 ``SecurityOrderBooksRequest``，返回 ``list[SecurityOrderBook]``。"""
 
@@ -354,7 +327,6 @@ def list_security_order_books(
         },
         required=("securities", "depth"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -363,7 +335,6 @@ def list_security_price_volume_levels(
     *,
     security: SecurityInput | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityPriceVolumeLevels``；请求 ``SecurityPriceVolumeLevelsRequest``，返回 ``list[PriceVolumeLevel]``。"""
 
@@ -375,7 +346,6 @@ def list_security_price_volume_levels(
         },
         required=("security",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -385,7 +355,6 @@ def list_security_ticks(
     security: SecurityInput | None = None,
     window: Mapping[str, Any] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityTicks``；请求 ``SecurityTicksRequest``，返回 ``list[Tick]``。"""
 
@@ -398,7 +367,6 @@ def list_security_ticks(
         },
         required=("security", "window"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -408,7 +376,6 @@ def list_security_time_and_sales_ticks(
     security: SecurityInput | None = None,
     count: int | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityTimeAndSalesTicks``；请求 ``SecurityTimeAndSalesTicksRequest``，返回 ``list[Tick]``。"""
 
@@ -421,7 +388,6 @@ def list_security_time_and_sales_ticks(
         },
         required=("security", "count"),
         timeout=timeout,
-        extra=extra,
     )
 
 

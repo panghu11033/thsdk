@@ -13,7 +13,14 @@ class NotAuthenticatedError(AuthenticationError):
 class APIError(THSDKError):
     """A typed public API call failed."""
 
-    def __init__(self, code: str, message: str):
+    def __init__(
+        self,
+        code: str,
+        message: str,
+        *,
+        retry_after_ms: int | None = None,
+    ):
         self.code = code
         self.message = message
+        self.retry_after_ms = retry_after_ms
         super().__init__(f"{code}: {message}" if code else message)

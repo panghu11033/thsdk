@@ -3,6 +3,8 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from datetime import date, datetime
 from enum import Enum
+import math
+import re
 from typing import Any
 from zoneinfo import ZoneInfo
 
@@ -15,11 +17,19 @@ BlockInput = int | Mapping[str, Any]
 
 
 _SHANGHAI = ZoneInfo("Asia/Shanghai")
+_MAX_TIMEOUT_SECONDS = 600
+_JSON_FIELD_NAME = re.compile(r"^[a-z0-9_]+$")
 
 
 def _timeout(value: float | None) -> float | None:
-    if value is not None and value <= 0:
-        raise ValueError("timeout 必须大于 0")
+    if value is not None and (
+        isinstance(value, bool)
+        or not isinstance(value, (int, float))
+        or not math.isfinite(value)
+        or value <= 0
+        or value > _MAX_TIMEOUT_SECONDS
+    ):
+        raise ValueError("timeout 必须大于 0 且不超过 600 秒")
     return value
 
 
@@ -35,11 +45,13 @@ def _json_value(value: Any) -> Any:
     if isinstance(value, date):
         return datetime.combine(value, datetime.min.time(), tzinfo=_SHANGHAI).isoformat()
     if isinstance(value, Mapping):
-        return {
-            str(key): _json_value(item)
-            for key, item in value.items()
-            if item is not None
-        }
+        result: dict[str, Any] = {}
+        for key, item in value.items():
+            if not isinstance(key, str) or _JSON_FIELD_NAME.fullmatch(key) is None:
+                raise TypeError("请求字段必须使用 ASCII 小写 snake_case")
+            if item is not None:
+                result[key] = _json_value(item)
+        return result
     if isinstance(value, tuple):
         return [_json_value(item) for item in value]
     if isinstance(value, list):
@@ -106,15 +118,16 @@ def _call_typed(
     required: tuple[str, ...],
     datetime_fields: tuple[str, ...] = (),
     timeout: float | None = None,
-    extra: Mapping[str, Any] | None = None,
 ) -> Any:
     supplied = {key: value for key, value in named_fields.items() if value is not None}
-    supplied.update(extra or {})
     if params is not None:
         if supplied:
             raise TypeError("params 与关键字请求字段不能同时提供")
         if not isinstance(params, Mapping):
             raise TypeError("params 必须是映射对象")
+        unknown = sorted(str(key) for key in params if key not in named_fields)
+        if unknown:
+            raise TypeError(f"未知请求字段: {', '.join(unknown)}")
         payload = _json_value(dict(params))
     else:
         missing = [name for name in required if name not in supplied]
@@ -125,25 +138,6 @@ def _call_typed(
             datetime_fields=frozenset(datetime_fields),
         )
     return _get_client()._request(method, payload, timeout=_timeout(timeout))
-
-
-def _call_object(
-    method: str,
-    params: ObjectParams | None = None,
-    *,
-    timeout: float | None = None,
-    **fields: Any,
-) -> Any:
-    if params is not None and fields:
-        raise TypeError("params 与关键字请求字段不能同时提供")
-    if params is not None and not isinstance(params, Mapping):
-        raise TypeError("params 必须是映射对象")
-    payload = dict(params) if params is not None else fields
-    return _get_client()._request(
-        method,
-        _json_value(payload),
-        timeout=_timeout(timeout),
-    )
 
 
 def _call_none(method: str, *, timeout: float | None = None) -> Any:
@@ -164,11 +158,11 @@ def _call_string(
 
 def _normalize_security(value: SecurityInput) -> dict[str, str]:
     if isinstance(value, Mapping):
-        code = str(value.get("code") or "").strip().upper()
+        code = str(value.get("code") or "").strip()
         market = str(value.get("market") or "").strip().upper()
     elif isinstance(value, str):
-        full_code = value.strip().upper()
-        market, code = full_code[:4], full_code[4:]
+        full_code = value.strip()
+        market, code = full_code[:4].upper(), full_code[4:]
     else:
         raise TypeError("证券必须是完整代码字符串或包含 code/market 的映射")
     if len(market) != 4 or not market.isalpha() or not code:

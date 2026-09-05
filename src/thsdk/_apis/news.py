@@ -21,7 +21,6 @@ def analyze_security_limit_up(
     security: SecurityInput | None = None,
     date: str | date | datetime | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``AnalyzeSecurityLimitUp``；请求 ``SecurityLimitUpAnalysisRequest``，返回 ``SecurityLimitUpAnalysisResult``。"""
 
@@ -35,7 +34,6 @@ def analyze_security_limit_up(
         required=("security",),
         datetime_fields=("date",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -46,7 +44,6 @@ def get_security_price_limit_events(
     start_year: int | None = None,
     end_year: int | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``GetSecurityPriceLimitEvents``；请求 ``PriceLimitEventsRequest``，返回 ``PriceLimitEventsResult``。"""
 
@@ -60,7 +57,6 @@ def get_security_price_limit_events(
         },
         required=("security",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -69,7 +65,6 @@ def get_security_short_term_highlights(
     *,
     security: SecurityInput | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``GetSecurityShortTermHighlights``；请求 ``SecurityShortTermHighlightsRequest``，返回 ``SecurityShortTermHighlightsResult``。"""
 
@@ -81,7 +76,6 @@ def get_security_short_term_highlights(
         },
         required=("security",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -90,7 +84,6 @@ def list_commodity_stock_linkage_news(
     *,
     commodity_index: Mapping[str, Any] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListCommodityStockLinkageNews``；请求 ``CommodityStockLinkageNewsRequest``，返回 ``CommodityStockLinkageNewsResult``。"""
 
@@ -102,7 +95,6 @@ def list_commodity_stock_linkage_news(
         },
         required=("commodity_index",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -118,7 +110,6 @@ def list_hot_event_news(
     block: BlockInput | None = None,
     range: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListHotEventNews``；请求 ``HotEventNewsRequest``，返回 ``HotEventNewsResult``。"""
 
@@ -131,7 +122,6 @@ def list_hot_event_news(
         },
         required=("block",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -141,7 +131,6 @@ def list_market_call_auction_unusual_events(
     market: str | None = None,
     trade_date: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListMarketCallAuctionUnusualEvents``；请求 ``CallAuctionUnusualEventsRequest``，返回 ``list[ShortTermEvent]``。"""
 
@@ -154,7 +143,6 @@ def list_market_call_auction_unusual_events(
         },
         required=("market",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -173,7 +161,6 @@ def list_market_short_term_events(
     max_count: int | None = None,
     before_timestamp_micros: int | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListMarketShortTermEvents``；请求 ``MarketShortTermEventsRequest``，返回 ``list[ShortTermEvent]``。"""
 
@@ -189,7 +176,6 @@ def list_market_short_term_events(
         },
         required=("market", "mode"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -206,7 +192,6 @@ def list_news_flash_items(
     created_at: str | None = None,
     environment: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListNewsFlashItems``；请求 ``NewsFlashItemsRequest``，返回 ``NewsFlashItemsResult``。"""
 
@@ -226,7 +211,6 @@ def list_news_flash_items(
         },
         required=("traversal",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -240,7 +224,6 @@ def list_news_items(
     summary_mode: int | None = None,
     advertorial: bool | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListNewsItems``；请求 ``NewsItemsRequest``，返回 ``NewsItemsResult``。"""
 
@@ -257,7 +240,6 @@ def list_news_items(
         },
         required=("category", "traversal"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -268,7 +250,6 @@ def list_security_news_events(
     timeline: str | None = None,
     window: Mapping[str, Any] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityNewsEvents``；请求 ``SecurityNewsEventsRequest``，返回 ``SecurityNewsItemsResult``。"""
 
@@ -282,7 +263,6 @@ def list_security_news_events(
         },
         required=("security", "timeline", "window"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -292,7 +272,6 @@ def list_security_news_markers(
     security: SecurityInput | None = None,
     timeline: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityNewsMarkers``；请求 ``SecurityNewsMarkersRequest``，返回 ``SecurityNewsItemsResult``。"""
 
@@ -305,7 +284,6 @@ def list_security_news_markers(
         },
         required=("security", "timeline"),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -315,7 +293,6 @@ def list_security_research_reports(
     security: SecurityInput | None = None,
     traversal: Mapping[str, Any] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityResearchReports``；请求 ``SecurityResearchReportsRequest``，返回 ``SecurityResearchReportsResult``。"""
 
@@ -328,7 +305,6 @@ def list_security_research_reports(
         },
         required=("security", "traversal"),
         timeout=timeout,
-        extra=extra,
     )
 
 

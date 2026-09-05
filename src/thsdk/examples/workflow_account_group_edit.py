@@ -11,7 +11,7 @@ else:
     thsdk.auth()
 
     before = thsdk.get_account_watchlist_groups()
-    before_ids = {int(group_id) for group_id in (before.get("groups") or {})}
+    before_ids = {int(group_id) for group_id in before.index}
     created_id = None
 
     try:
@@ -35,11 +35,13 @@ else:
             securities=[SECURITY],
         )
         current = thsdk.get_account_watchlist_groups()
-        current_groups = current.get("groups") or {}
-        current_group = (
-            current_groups.get(str(created_id))
-            or current_groups.get(created_id)
-            or {}
+        current_group = next(
+            (
+                row
+                for row in current.to_dict("records")
+                if int(row.get("id") or 0) == created_id
+            ),
+            {},
         )
         print(f"加入证券后：{len(current_group.get('securities') or [])} 只")
 

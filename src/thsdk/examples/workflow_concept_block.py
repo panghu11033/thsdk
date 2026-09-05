@@ -6,13 +6,13 @@ thsdk.auth()
 
 # 热门概念给出发现顺序；再按名称解析可查询成分股的标准板块 ID。
 hot = thsdk.list_wencai_hot_blocks(kind=thsdk.WencaiHotBlockKind.CONCEPT)
+hot_items = hot.to_dict("records")
 print("热门概念：")
-for item in (hot.get("items") or [])[:5]:
+for item in hot_items[:5]:
     print(item["order"], item["block"]["name"], item.get("hot_tag", ""))
 
-items = hot.get("items") or []
-if items:
-    concept_name = items[0]["block"]["name"]
+if hot_items:
+    concept_name = hot_items[0]["block"]["name"]
     block = thsdk.resolve_block(name=concept_name)
     descriptions = thsdk.list_block_descriptions(blocks=[block])
 
@@ -24,7 +24,8 @@ if items:
         sort_order="A",
     )
     member_name_by_code = {
-        item["full_code"]: item.get("name", "") for item in member_names
+        item["full_code"]: item.get("name", "")
+        for item in member_names.to_dict("records")
     }
     ranking = thsdk.rank_block_securities(
         block=block,
@@ -35,8 +36,8 @@ if items:
     )
 
     print(f"\n概念板块：{block['name']}")
-    if descriptions:
-        print("简介：", descriptions[0].get("description", ""))
+    if not descriptions.empty:
+        print("简介：", descriptions.iloc[0].get("description", ""))
     print("成分股涨幅排行：")
-    for item in ranking.get("securities") or []:
+    for item in ranking.to_dict("records"):
         print(item["full_code"], member_name_by_code.get(item["full_code"], ""))

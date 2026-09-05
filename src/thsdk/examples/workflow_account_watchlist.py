@@ -5,8 +5,8 @@ thsdk.auth()
 watchlist = thsdk.get_account_watchlist()
 groups = thsdk.get_account_watchlist_groups()
 
-securities = watchlist.get("securities") or []
-group_items = list((groups.get("groups") or {}).values())
+securities = watchlist.to_dict("records")
+group_items = groups.to_dict("records")
 
 print(f"账号自选：{len(securities)} 只")
 print(f"自选分组：{len(group_items)} 个")

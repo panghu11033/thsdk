@@ -21,7 +21,6 @@ def get_market_metadata(
     market: str | None = None,
     version_flag: int | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``GetMarketMetadata``；请求 ``MarketMetadataRequest``，返回 ``MarketMetadata``。"""
 
@@ -34,7 +33,6 @@ def get_market_metadata(
         },
         required=("market",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -46,7 +44,6 @@ def get_market_security_names(
     history_version_ini: str | None = None,
     base_version_ini: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``GetMarketSecurityNames``；请求 ``MarketSecurityNamesRequest``，返回 ``MarketSecurityNamesResult``。"""
 
@@ -61,7 +58,6 @@ def get_market_security_names(
         },
         required=("market",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -70,7 +66,6 @@ def get_security_concept_tags(
     *,
     security: SecurityInput | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``GetSecurityConceptTags``；请求 ``SecurityConceptTagsRequest``，返回 ``SecurityConceptTagsResult``。"""
 
@@ -82,7 +77,6 @@ def get_security_concept_tags(
         },
         required=("security",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -91,7 +85,6 @@ def get_security_industry(
     *,
     security: SecurityInput | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``GetSecurityIndustry``；请求 ``SecurityRequest``，返回 ``SecurityIndustryMapping``。"""
 
@@ -103,7 +96,6 @@ def get_security_industry(
         },
         required=("security",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -116,7 +108,6 @@ def list_block_constituents(
     sort_order: str | None = None,
     sort_id: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListBlockConstituents``；请求 ``BlockConstituentsRequest``，返回 ``list[BlockConstituent]``。"""
 
@@ -132,7 +123,6 @@ def list_block_constituents(
         },
         required=("block",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -141,7 +131,6 @@ def list_block_descriptions(
     *,
     blocks: Sequence[BlockInput] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListBlockDescriptions``；请求 ``BlockDescriptionsRequest``，返回 ``list[BlockDescription]``。"""
 
@@ -153,7 +142,6 @@ def list_block_descriptions(
         },
         required=("blocks",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -168,7 +156,6 @@ def list_industry_children(
     *,
     industry: Mapping[str, Any] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListIndustryChildren``；请求 ``IndustryChildrenRequest``，返回 ``list[IndustryChild]``。"""
 
@@ -180,7 +167,6 @@ def list_industry_children(
         },
         required=("industry",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -194,7 +180,6 @@ def list_market_securities(
     sort_order: str | None = None,
     func_period: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListMarketSecurities``；请求 ``MarketSecuritiesRequest``，返回 ``MarketSecuritiesResult``。"""
 
@@ -211,7 +196,6 @@ def list_market_securities(
         },
         required=("market",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -220,7 +204,6 @@ def list_related_security_performances(
     *,
     security: SecurityInput | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListRelatedSecurityPerformances``；请求 ``RelatedSecurityPerformancesRequest``，返回 ``list[RelatedSecurityPerformance]``。"""
 
@@ -232,7 +215,6 @@ def list_related_security_performances(
         },
         required=("security",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -241,7 +223,6 @@ def list_security_ah_relations(
     *,
     security: SecurityInput | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityAHRelations``；请求 ``SecurityAHRelationsRequest``，返回 ``list[SecurityAHRelation]``。"""
 
@@ -253,7 +234,6 @@ def list_security_ah_relations(
         },
         required=("security",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -262,7 +242,6 @@ def list_security_block_memberships(
     *,
     security: SecurityInput | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityBlockMemberships``；请求 ``SecurityBlockMembershipsRequest``，返回 ``list[SecurityBlockMembership]``。"""
 
@@ -274,7 +253,6 @@ def list_security_block_memberships(
         },
         required=("security",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -293,7 +271,6 @@ def list_security_industry_mappings(
     *,
     securities: Sequence[SecurityInput] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ListSecurityIndustryMappings``；请求 ``SecurityIndustryMappingsRequest``，返回 ``list[SecurityIndustryMapping]``。"""
 
@@ -305,7 +282,6 @@ def list_security_industry_mappings(
         },
         required=("securities",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -320,7 +296,6 @@ def resolve_block(
     *,
     name: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ResolveBlock``；请求 ``ResolveBlockRequest``，返回 ``Block``。"""
 
@@ -332,7 +307,6 @@ def resolve_block(
         },
         required=("name",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -341,7 +315,6 @@ def resolve_securities(
     *,
     codes: Sequence[str] | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``ResolveSecurities``；请求 ``ResolveSecuritiesRequest``，返回 ``list[ResolvedSecurity]``。"""
 
@@ -353,7 +326,6 @@ def resolve_securities(
         },
         required=("codes",),
         timeout=timeout,
-        extra=extra,
     )
 
 
@@ -363,7 +335,6 @@ def search_securities(
     pattern: str | None = None,
     market: str | None = None,
     timeout: float | None = None,
-    **extra: Any,
 ) -> Any:
     """调用原生 ``SearchSecurities``；请求 ``SearchSecuritiesRequest``，返回 ``list[SecurityCandidate]``。"""
 
@@ -376,7 +347,6 @@ def search_securities(
         },
         required=("pattern",),
         timeout=timeout,
-        extra=extra,
     )
 
 
