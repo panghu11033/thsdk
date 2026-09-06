@@ -1,4 +1,4 @@
-"""导出同花顺二级行业及其成分股（适用于 THSDK 2.0.0）。"""
+"""导出同花顺二级行业及其成分股（适用于 THSDK 2.x）。"""
 
 from __future__ import annotations
 
@@ -50,7 +50,7 @@ def load_industries(limit: int | None = None) -> list[dict[str, Any]]:
         sort_id="55",
         sort_order="A",
     )
-    industries = list(rows or [])
+    industries = rows.to_dict(orient="records")
     return industries[:limit] if limit is not None else industries
 
 
@@ -68,9 +68,10 @@ def load_constituents(industry: Mapping[str, Any]) -> list[dict[str, Any]]:
         sort_id="55",
         sort_order="A",
     )
-    members = list(result.get("securities") or [])
+    members = result.to_dict(orient="records")
 
-    total_count = result.get("total_count")
+    metadata = result.attrs.get("thsdk", {}).get("metadata", {})
+    total_count = metadata.get("total_count") if isinstance(metadata, Mapping) else None
     if isinstance(total_count, int) and total_count >= 0 and len(members) != total_count:
         raise RuntimeError(
             f"服务端声明有 {total_count} 只成分股，本次只返回 {len(members)} 只"
